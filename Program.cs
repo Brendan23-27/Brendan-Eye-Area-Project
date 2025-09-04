@@ -1,0 +1,155 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+
+namespace Brendan_Eye_area_project
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("please tell me what shape you need the area calculated for");
+            Console.WriteLine("we can calculate a circle square or rectangle");
+
+            string? usersShape = Console.ReadLine();
+            string lowerUserShape = usersShape?.ToLower().Trim() ?? "";
+
+            if (lowerUserShape == "circle")
+            {
+
+                try
+                {
+                    Console.WriteLine("please give me the radius");
+                    string? lengthInput = Console.ReadLine() ?? "";
+                    decimal lengthInputdecimal = 0.0M;
+                    lengthInputdecimal = decimal.Parse(lengthInput);
+
+                    Shape shape = new Circle(lengthInputdecimal);
+
+                    Console.WriteLine($"the area of {lowerUserShape} is {shape.Area()}");
+                }
+
+                catch (FormatException)
+                {
+                    Console.WriteLine("that's not a number please try again");
+
+                }
+            }
+
+            else if (lowerUserShape == "square")
+            {
+                try
+                {
+                    Console.WriteLine("please give me the length");
+                    string? lengthInput = Console.ReadLine() ?? "";
+                    decimal lengthInputDecimal = 0.0M;
+                    lengthInputDecimal = decimal.Parse(lengthInput);
+
+                    Shape shape = new Square(lengthInputDecimal);
+
+                    Console.WriteLine($"the area of {lowerUserShape} is {shape.Area()}");
+                }
+
+                catch (FormatException)
+                {
+                    Console.WriteLine("that's not a number please try again");
+                    
+                }
+            }
+
+           else if (lowerUserShape == "rectangle")
+            {
+
+                try
+                {
+                    Console.WriteLine("please give me the length");
+                    string? lengthInput = Console.ReadLine() ?? "";
+                    decimal lengthInputDecimal = 0;
+                    lengthInputDecimal = decimal.Parse(lengthInput);
+
+                    Console.WriteLine("please give me the height");
+                    string? heightInput = Console.ReadLine() ?? "";
+                    decimal heightInputDecimal = 0.0M;
+                    heightInputDecimal = decimal.Parse(heightInput);
+
+                    Shape shape = new Rectangle(lengthInputDecimal, heightInputDecimal);
+
+                    Console.WriteLine($"the area of {lowerUserShape} is {shape.Area()}");
+                }
+
+                catch(FormatException)
+                {
+                    Console.WriteLine("that's not a number please try again");
+                }
+                
+
+            }
+
+            else
+            {
+                Console.WriteLine("that's not a shape we have yet please try again");
+
+            }
+        }
+    }
+
+    internal abstract class Shape
+    {
+        protected decimal lengthOfShape;
+        protected decimal hightOfShape;
+
+        public abstract decimal Area();
+
+        protected Shape(decimal length, decimal hight)
+        {
+            lengthOfShape = length;
+            hightOfShape = hight;
+        }
+    }
+
+    internal class Rectangle : Shape
+    {
+        
+        public Rectangle(decimal length, decimal hight) : base (length, hight)
+        {
+
+        }
+
+        public override decimal Area()
+        {
+            return Math.Round(lengthOfShape * hightOfShape, 3);
+        }
+    }
+
+    internal class Square : Shape
+    {
+
+        public Square(decimal length) : base (length, length)
+        {
+
+        }
+
+        public override decimal Area()
+        {
+            return Math.Round(lengthOfShape * lengthOfShape , 3);
+        }
+
+    }
+
+    internal class Circle : Shape
+    {
+
+        public Circle(decimal length) : base (length, 0)
+        {
+
+        }
+
+        public override decimal Area()
+        {
+            double doublePi = Math.PI;
+            decimal decimalPi = (decimal) doublePi;
+
+            return Math.Round(lengthOfShape * lengthOfShape * decimalPi , 3);
+        }
+
+    }
+}
